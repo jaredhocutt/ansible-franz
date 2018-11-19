@@ -1,0 +1,8 @@
+---
+
+franz_version: latest
+
+franz_archive_filename: franz-{{ franz_version | regex_replace('^v', '') }}.tar.gz
+
+franz_install_dir: /opt/franz
+franz_download_dir: "{{ franz_install_dir }}/{{ franz_archive_filename | regex_replace('.tar.gz$', '') }}"

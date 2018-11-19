@@ -1,0 +1,58 @@
+---
+
+- block:
+    - name: Get latest release of Franz
+      uri:
+        url: https://api.github.com/repos/meetfranz/franz/releases/latest
+      register: franz_latest_release
+
+    - name: Set franz_version to latest release
+      set_fact:
+        franz_version: "{{ franz_latest_release.json.tag_name }}"
+  when: franz_version == 'latest'
+
+- name: Create Franz install directory
+  file:
+    path: "{{ franz_install_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+
+- name: Download Franz
+  unarchive:
+    src: https://github.com/meetfranz/franz/releases/download/{{ franz_version }}/{{ franz_archive_filename }}
+    dest: "{{ franz_install_dir }}"
+    owner: root
+    group: root
+    creates: "{{ franz_download_dir }}"
+    remote_src: yes
+  become: yes
+
+- name: Create symlink franz
+  file:
+    src: "{{ franz_download_dir }}/franz"
+    dest: "{{ franz_install_dir }}/franz"
+    owner: root
+    group: root
+    state: link
+  become: yes
+
+- name: Add application icon
+  copy:
+    src: icon.png
+    dest: /opt/franz/icon.png
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+
+- name: Create application shortcut
+  copy:
+    src: franz.desktop
+    dest: /usr/share/applications/franz.desktop
+    owner: root
+    group: root
+    mode: 0644
+  become: yes

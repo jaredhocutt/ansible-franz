@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Franz
+Comment=Messaging app for WhatsApp, Slack, Telegram, HipChat, Hangouts and many many more.
+Exec=/opt/franz/franz %U
+Icon=/opt/franz/icon.png
+Type=Application
+StartupNotify=true
