@@ -1,14 +1,15 @@
 ---
+# tasks file for franz
 
 - block:
     - name: Get latest release of Franz
       uri:
         url: https://api.github.com/repos/meetfranz/franz/releases/latest
-      register: franz_latest_release
+      register: r_franz_latest_release
 
     - name: Set franz_version to latest release
       set_fact:
-        franz_version: "{{ franz_latest_release.json.tag_name }}"
+        franz_version: "{{ r_franz_latest_release.json.tag_name }}"
   when: franz_version == 'latest'
 
 - name: Create Franz install directory
@@ -42,15 +43,15 @@
 - name: Add application icon
   copy:
     src: icon.png
-    dest: /opt/franz/icon.png
+    dest: "{{ franz_install_dir }}/icon.png"
     owner: root
     group: root
     mode: 0644
   become: yes
 
 - name: Create application shortcut
-  copy:
-    src: franz.desktop
+  template:
+    src: franz.desktop.j2
     dest: /usr/share/applications/franz.desktop
     owner: root
     group: root

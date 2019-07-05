@@ -1,2 +1,4 @@
 ---
 # vars file for franz
+
+franz_version: latest
