@@ -16,10 +16,8 @@ galaxy_info:
     - all
 
   galaxy_tags:
-    - vscode
-    - code
-    - visualstudio
-    - editor
-    - text
+    - franz
+    - chat
+    - communication
 
 dependencies: []
