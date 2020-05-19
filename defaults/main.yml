@@ -1,7 +1,8 @@
 ---
 # defaults file for franz
 
-franz_install_dir: /opt/franz
-franz_download_dir: "{{ franz_install_dir }}/{{ franz_archive_filename | regex_replace('.tar.gz$', '') }}"
+franz_install_dir: ~/Applications
+franz_icon_dir: ~/.local/share/icons/custom
+franz_desktop_dir: ~/.local/share/applications
 
-franz_archive_filename: franz-{{ franz_version | regex_replace('^v', '') }}.tar.gz
+franz_appimage_filename: Franz-{{ franz_version | regex_replace('^v', '') }}.AppImage

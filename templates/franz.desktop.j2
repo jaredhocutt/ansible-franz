@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Franz
 Comment=Messaging app for WhatsApp, Slack, Telegram, HipChat, Hangouts and many many more.
-Exec={{ franz_install_dir }}/franz %U
-Icon={{ franz_install_dir }}/icon.png
+Exec={{ franz_install_dir | expanduser }}/Franz.AppImage %U
+Icon={{ franz_icon_dir | expanduser }}/franz.png
 Type=Application
 StartupNotify=true

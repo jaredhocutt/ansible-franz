@@ -16,44 +16,28 @@
   file:
     path: "{{ franz_install_dir }}"
     state: directory
-    owner: root
-    group: root
     mode: 0755
-  become: yes
 
 - name: Download Franz
-  unarchive:
-    src: https://github.com/meetfranz/franz/releases/download/{{ franz_version }}/{{ franz_archive_filename }}
-    dest: "{{ franz_install_dir }}"
-    owner: root
-    group: root
-    creates: "{{ franz_download_dir }}"
-    remote_src: yes
-  become: yes
+  get_url:
+    url: https://github.com/meetfranz/franz/releases/download/{{ franz_version }}/{{ franz_appimage_filename }}
+    dest: "{{ franz_install_dir }}/Franz.AppImage"
+    mode: 0755
 
-- name: Create symlink franz
+- name: Create Franz icon directory
   file:
-    src: "{{ franz_download_dir }}/franz"
-    dest: "{{ franz_install_dir }}/franz"
-    owner: root
-    group: root
-    state: link
-  become: yes
+    path: "{{ franz_icon_dir }}"
+    state: directory
+    mode: 0755
 
 - name: Add application icon
   copy:
     src: icon.png
-    dest: "{{ franz_install_dir }}/icon.png"
-    owner: root
-    group: root
+    dest: "{{ franz_icon_dir }}/franz.png"
     mode: 0644
-  become: yes
 
 - name: Create application shortcut
   template:
     src: franz.desktop.j2
-    dest: /usr/share/applications/franz.desktop
-    owner: root
-    group: root
+    dest: "{{ franz_desktop_dir }}/franz.desktop"
     mode: 0644
-  become: yes
